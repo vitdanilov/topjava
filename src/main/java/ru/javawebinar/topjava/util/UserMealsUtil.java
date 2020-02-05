@@ -14,11 +14,12 @@ import java.util.stream.Stream;
 public class UserMealsUtil {
     public static void main(String[] args) {
         List<UserMeal> meals = Arrays.asList(
+                new UserMeal(LocalDateTime.of(2020, Month.JANUARY, 31, 10, 0), "Завтрак", 1000),
                 new UserMeal(LocalDateTime.of(2020, Month.JANUARY, 30, 10, 0), "Завтрак", 500),
                 new UserMeal(LocalDateTime.of(2020, Month.JANUARY, 30, 13, 0), "Обед", 1000),
                 new UserMeal(LocalDateTime.of(2020, Month.JANUARY, 30, 20, 0), "Ужин", 500),
                 new UserMeal(LocalDateTime.of(2020, Month.JANUARY, 31, 0, 0), "Еда на граничное значение", 100),
-                new UserMeal(LocalDateTime.of(2020, Month.JANUARY, 31, 10, 0), "Завтрак", 1000),
+                //new UserMeal(LocalDateTime.of(2020, Month.JANUARY, 31, 10, 0), "Завтрак", 1000),
                 new UserMeal(LocalDateTime.of(2020, Month.JANUARY, 31, 13, 0), "Обед", 500),
                 new UserMeal(LocalDateTime.of(2020, Month.JANUARY, 31, 20, 0), "Ужин", 410)
         );
@@ -37,41 +38,54 @@ public class UserMealsUtil {
         List<UserMealWithExcess> userMealWithExcessList = new ArrayList<>();
 
         HashMap<LocalDate, Integer> userMealDay = new HashMap<>();
-        int tmp =0;
+        int tmp = 0;
         //LocalDate localDate = LocalDate.now();
-        LocalDate localDate =LocalDate.of(2999,1,1);
-        for(UserMeal userMeal : meals) {
-            if (localDate.equals(userMeal.getDateTime().toLocalDate())){
-                tmp=tmp+userMeal.getCalories();
-            }
-            else {
+        LocalDate localDate = LocalDate.of(2999, 1, 1);
+        for (UserMeal userMeal : meals) {
+            if (localDate.equals(userMeal.getDateTime().toLocalDate())) {
+                tmp = tmp + userMeal.getCalories();
+            } else {
                 localDate = userMeal.getDateTime().toLocalDate();
-                tmp=userMeal.getCalories();
+                if (userMealDay.get(localDate) == null) {
+                    tmp = userMeal.getCalories();
+                } else {
+                    tmp = userMeal.getCalories() + userMealDay.get(localDate);
+                }
+
             }
             userMealDay.put(userMeal.getDateTime().toLocalDate(), tmp);
         }
 
-        System.out.println( userMealDay.toString());
+        System.out.println("HashMapCycles");
+        System.out.println(userMealDay.toString());
 
-        meals.forEach(s -> {if (s.getDateTime().toLocalTime().isAfter(startTime) && s.getDateTime().toLocalTime().isBefore(endTime) ) {userMealWithExcessList.add(new UserMealWithExcess(s.getDateTime(),s.getDescription(),s.getCalories(), userMealDay.get(s.getDateTime().toLocalDate())>caloriesPerDay));}});
+        meals.forEach(s -> {
+            if (s.getDateTime().toLocalTime().isAfter(startTime) && s.getDateTime().toLocalTime().isBefore(endTime)) {
+                userMealWithExcessList.add(new UserMealWithExcess(s.getDateTime(), s.getDescription(), s.getCalories(), userMealDay.get(s.getDateTime().toLocalDate()) > caloriesPerDay));
+            }
+        });
 
         return userMealWithExcessList;
     }
 
-    static HashMap<LocalDate, Integer> userMealDay2 = new HashMap<>();
-    static LocalDate localDate =LocalDate.of(2999,1,1);
-    static int tmp2 =0;
+    static HashMap<LocalDate, Integer> userMealDay = new HashMap<>();
 
-    private static void funcForSream ( UserMeal s ){
+    private static void funcForSream(UserMeal userMeal) {
+        LocalDate localDate = LocalDate.of(2999, 1, 1);
+        int tmp = 0;
 
-        if ( s.getDateTime().toLocalDate().equals(localDate)) {
-            tmp2=tmp2+s.getCalories();
+        if (userMeal.getDateTime().toLocalDate().equals(localDate)) {
+            tmp = tmp + userMeal.getCalories();
+        } else {
+            localDate = userMeal.getDateTime().toLocalDate();
+            //tmp = s.getCalories();
+            if (userMealDay.get(localDate) == null) {
+                tmp = userMeal.getCalories();
+            } else {
+                tmp = userMeal.getCalories() + userMealDay.get(localDate);
+            }
         }
-        else {
-            localDate = s.getDateTime().toLocalDate();
-            tmp2=s.getCalories();
-        }
-        userMealDay2.put(s.getDateTime().toLocalDate(), tmp2);
+        userMealDay.put(userMeal.getDateTime().toLocalDate(), tmp);
     }
 
 
@@ -82,11 +96,17 @@ public class UserMealsUtil {
 
         streamFromCollection.forEach(s -> funcForSream(s));
 
+
         List<UserMealWithExcess> userMealWithExcessList = new ArrayList<>();
 
-        meals.forEach(s -> {if (s.getDateTime().toLocalTime().isAfter(startTime) && s.getDateTime().toLocalTime().isBefore(endTime) ) {userMealWithExcessList.add(new UserMealWithExcess(s.getDateTime(),s.getDescription(),s.getCalories(), userMealDay2.get(s.getDateTime().toLocalDate())>caloriesPerDay));}});
+        meals.forEach(s -> {
+            if (s.getDateTime().toLocalTime().isAfter(startTime) && s.getDateTime().toLocalTime().isBefore(endTime)) {
+                userMealWithExcessList.add(new UserMealWithExcess(s.getDateTime(), s.getDescription(), s.getCalories(), userMealDay.get(s.getDateTime().toLocalDate()) > caloriesPerDay));
+            }
+        });
 
-        System.out.println(userMealDay2.toString());
+        System.out.println("HashMapStream");
+        System.out.println(userMealDay.toString());
 
         return userMealWithExcessList;
     }
