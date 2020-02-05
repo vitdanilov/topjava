@@ -25,16 +25,19 @@ public class UserMealsUtil {
         );
 
         System.out.println("filteredByCycles");
-        List<UserMealWithExcess> mealsTo = filteredByCycles(meals, LocalTime.of(9, 0), LocalTime.of(15, 0), 2000);
+        List<UserMealWithExcess> mealsTo = filteredByCycles(meals, LocalTime.of(0, 0), LocalTime.of(15, 0), 2000);
         mealsTo.forEach(System.out::println);
 
         System.out.println("filteredByStreams");
-        System.out.println(filteredByStreams(meals, LocalTime.of(9, 0), LocalTime.of(15, 0), 2000));
+        System.out.println(filteredByStreams(meals, LocalTime.of(0, 0), LocalTime.of(15, 0), 2000));
     }
 
 
     public static List<UserMealWithExcess> filteredByCycles(List<UserMeal> meals, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
+
         // TODO return filtered list with excess. Implement by cycles
+        System.out.println("startTime = " + startTime + " endTime " + endTime);
+
         List<UserMealWithExcess> userMealWithExcessList = new ArrayList<>();
 
         HashMap<LocalDate, Integer> userMealDay = new HashMap<>();
@@ -60,7 +63,7 @@ public class UserMealsUtil {
         System.out.println(userMealDay.toString());
 
         meals.forEach(s -> {
-            if (s.getDateTime().toLocalTime().isAfter(startTime) && s.getDateTime().toLocalTime().isBefore(endTime)) {
+            if (TimeUtil.isBetweenInclusive(s.getDateTime().toLocalTime(), startTime, endTime)){
                 userMealWithExcessList.add(new UserMealWithExcess(s.getDateTime(), s.getDescription(), s.getCalories(), userMealDay.get(s.getDateTime().toLocalDate()) > caloriesPerDay));
             }
         });
@@ -91,6 +94,7 @@ public class UserMealsUtil {
 
     public static List<UserMealWithExcess> filteredByStreams(List<UserMeal> meals, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
         // TODO Implement by streams
+        System.out.println("startTime = " + startTime + " endTime " + endTime);
 
         Stream<UserMeal> streamFromCollection = meals.stream();
 
@@ -100,7 +104,7 @@ public class UserMealsUtil {
         List<UserMealWithExcess> userMealWithExcessList = new ArrayList<>();
 
         meals.forEach(s -> {
-            if (s.getDateTime().toLocalTime().isAfter(startTime) && s.getDateTime().toLocalTime().isBefore(endTime)) {
+            if (TimeUtil.isBetweenInclusive(s.getDateTime().toLocalTime(), startTime, endTime)){
                 userMealWithExcessList.add(new UserMealWithExcess(s.getDateTime(), s.getDescription(), s.getCalories(), userMealDay.get(s.getDateTime().toLocalDate()) > caloriesPerDay));
             }
         });
