@@ -9,7 +9,7 @@ public class MealTo {
 
     private final int calories;
 
-//    private final Supplier<Boolean> excess;
+    //    private final Supplier<Boolean> excess;
 //    private final AtomicBoolean excess;
     private final boolean excess;
 
@@ -32,5 +32,21 @@ public class MealTo {
                 ", calories=" + calories +
                 ", excess=" + excess +
                 '}';
+    }
+
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public int getCalories() {
+        return calories;
+    }
+
+    public boolean isExcess() {
+        return excess;
     }
 }
