@@ -36,7 +36,7 @@ public class UserServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         String id = request.getParameter("id");
 
-        User user = new User(UserUtil.getCounter().incrementAndGet(),//id.isEmpty() ? null : Integer.valueOf(id),
+        User user = new User(id.isEmpty() ? null : Integer.valueOf(id),
                 request.getParameter("name"),
                 request.getParameter("email"),
                 request.getParameter("password"),

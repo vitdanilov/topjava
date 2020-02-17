@@ -29,8 +29,8 @@
             <td>${user.email}</td>
             <td>${user.getRoles()}</td>
             <td><input type="checkbox" ${user.isEnabled() ? 'checked' : ''}></td>
-            <td><a href="users?action=update&id=${meal.id}">Update</a></td>
-            <td><a href="users?action=delete&id=${meal.id}">Delete</a></td>
+            <td><a href="users?action=update&id=${user.id}">Update</a></td>
+            <td><a href="users?action=delete&id=${user.id}">Delete</a></td>
         </tr>
     </c:forEach>
 </table>

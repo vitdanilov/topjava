@@ -38,6 +38,8 @@ public class User extends AbstractNamedEntity implements Comparable<User>{
         this.roles = roles;
     }
 
+
+
     public String getEmail() {
         return email;
     }
@@ -87,7 +89,11 @@ public class User extends AbstractNamedEntity implements Comparable<User>{
     }
 
     public boolean isNew() {
-        return id != null;
+        return id == null;
+    }
+
+    public Integer getId() {
+        return id;
     }
 
     @Override

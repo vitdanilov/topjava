@@ -16,10 +16,10 @@ public class UserUtil {
     private static AtomicInteger counter = new AtomicInteger(NOT_EXIST_USER_ID);
 
     public static final List<User> USERS = Arrays.asList(
-            new User(counter.incrementAndGet(), "Don Juan Garsia", "garsia@juan.com", "password", 2000, true, Collections.singleton(Role.ROLE_USER)),
-            new User(counter.incrementAndGet(), "Don Pedro", "don@pedro.com", "password", 1500, true, Collections.singleton(Role.ROLE_USER)),
-            new User(counter.incrementAndGet(), "Иван Петрофф", "ivan@petroff.com", "password", 2500, true, Collections.singleton(Role.ROLE_USER)),
-            new User(counter.incrementAndGet(), "Abraham Scott", "abraham@scott.com", "password", 2500, false, Collections.singleton(Role.ROLE_USER))
+            new User("Don Juan Garsia", "garsia@juan.com", "password"),
+            new User("Don Pedro", "don@pedro.com", "password"),
+            new User("Иван Петрофф", "ivan@petroff.com", "password"),
+            new User("Abraham Scott", "abraham@scott.com", "password")
     );
 
     public static AtomicInteger getCounter() {
