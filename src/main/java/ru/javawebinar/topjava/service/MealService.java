@@ -2,6 +2,8 @@ package ru.javawebinar.topjava.service;
 
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.repository.MealRepository;
+import ru.javawebinar.topjava.util.ValidationUtil;
+import ru.javawebinar.topjava.web.SecurityUtil;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,11 +16,11 @@ public class MealService {
     private MealRepository repository;
 
     public List<Meal> getAll() {
-        return repository.getAll().stream().collect(Collectors.toList());
+        return repository.getAll(SecurityUtil.authUserId()).stream().collect(Collectors.toList());
     }
 
     public Meal get(int id) {
-        return checkNotFoundWithId(repository.get(id), id);
+        return checkNotFoundWithId(repository.get(id, SecurityUtil.authUserId()), id);
     }
 
     public Meal create(Meal meal) {
@@ -26,7 +28,7 @@ public class MealService {
     }
 
     public void delete(int id) {
-        checkNotFoundWithId(repository.delete(id), id);
+        checkNotFoundWithId(repository.delete(id, SecurityUtil.authUserId()), id);
     }
 
     public void update(Meal meal) {
