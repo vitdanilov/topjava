@@ -26,7 +26,8 @@ public class UserUtil {
     }
 
     public static List<User> getTos(Collection<User> users) {
-        return users.stream().sorted().collect(Collectors.toList());
+        //return repository.values().stream().filter(s -> s.getUserId()== userId).sorted(Comparator.comparing(Meal::getDateTime).reversed()).collect(Collectors.toList());
+        return users.stream().sorted(Comparator.comparing(User::getName)).collect(Collectors.toList());
     }
 
 }
