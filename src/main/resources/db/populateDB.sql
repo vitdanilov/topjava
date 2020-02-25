@@ -19,3 +19,7 @@ INSERT INTO meals (user_id, date_time, description, calories) VALUES
 
 INSERT INTO meals (user_id, date_time, description, calories) VALUES
 ((select id from users where name='Admin'), now(),'админский омлет1', 1000);
+
+
+INSERT INTO meals (user_id, date_time, description, calories) VALUES
+((select id from users where name='User'), now(), 'Шеф омлет', 1000);
