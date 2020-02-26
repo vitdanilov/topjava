@@ -49,36 +49,12 @@ public class JdbcMealRepository implements MealRepository {
             meal.setId(newKey.intValue());
         } else if (namedParameterJdbcTemplate.update(
                 "UPDATE meals SET description=:description, date_time=:date_time, calories=:calories " +
-                        " WHERE id=:id", map) == 0) {
+                        " WHERE id=:id AND user_id=:user_id", map) == 0) {
             return null;
         }
         return meal;
     }
 
-    /*
-
-    @Override
-    public User save(User user) {
-        MapSqlParameterSource map = new MapSqlParameterSource()
-                .addValue("id", user.getId())
-                .addValue("name", user.getName())
-                .addValue("email", user.getEmail())
-                .addValue("password", user.getPassword())
-                .addValue("registered", user.getRegistered())
-                .addValue("enabled", user.isEnabled())
-                .addValue("caloriesPerDay", user.getCaloriesPerDay());
-
-        if (user.isNew()) {
-            Number newKey = insertUser.executeAndReturnKey(map);
-            user.setId(newKey.intValue());
-        } else if (namedParameterJdbcTemplate.update(
-                "UPDATE users SET name=:name, email=:email, password=:password, " +
-                        "registered=:registered, enabled=:enabled, calories_per_day=:caloriesPerDay WHERE id=:id", map) == 0) {
-            return null;
-        }
-        return user;
-    }
-    * */
 
     @Override
     public boolean delete(int id, int userId) {
