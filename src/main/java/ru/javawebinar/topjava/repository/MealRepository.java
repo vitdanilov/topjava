@@ -1,11 +1,12 @@
 package ru.javawebinar.topjava.repository;
 
+import org.springframework.stereotype.Repository;
 import ru.javawebinar.topjava.model.Meal;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-public interface MealRepository {
+public interface MealRepository  {
     // null if updated meal do not belong to userId
     Meal save(Meal meal, int userId);
 
