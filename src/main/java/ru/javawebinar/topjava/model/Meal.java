@@ -30,6 +30,7 @@ public class Meal extends AbstractBaseEntity {
     public static final String BETWEEN_HALF_OPEN = "Meal.getByDateTime";
     public static final String ALL_SORTED = "Meal.getAllSorted";
     public static final String SINGLE = "Meal.getSingle";
+    public static final String INSERT = "Meal.getSingle";
 
     @Column(name = "date_time", nullable = false, unique = true)
     @NotNull
